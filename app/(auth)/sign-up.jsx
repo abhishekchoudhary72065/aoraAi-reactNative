@@ -5,11 +5,14 @@ import { images } from "@/constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link } from "expo-router";
+import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    createUser();
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-primary">
