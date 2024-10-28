@@ -10,7 +10,6 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 
 const App = () => {
   const { isLoading, isLoggedIn } = useGlobalContext();
-  console.log(isLoading, isLoggedIn);
   if (!isLoading && isLoggedIn) return <Redirect href="/home" />;
   return (
     <SafeAreaView

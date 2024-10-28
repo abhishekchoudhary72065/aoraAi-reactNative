@@ -1,8 +1,8 @@
+import "../global.css";
 import React, { useEffect } from "react";
 import { Stack, SplashScreen } from "expo-router";
-import "../global.css";
-import { useFonts } from "expo-font";
 import GlobalContextProvider from "../context/GlobalProvider";
+import { useFonts } from "expo-font";
 
 // This will prevent the splash screen from auto hiding until all the fonts are loaded.
 SplashScreen.preventAutoHideAsync();
