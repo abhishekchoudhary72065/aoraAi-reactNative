@@ -1,15 +1,33 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link } from "expo-router";
+import { Signin } from "../../lib/appwrite";
+import { router } from "expo-router";
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    if (!form.email || form.password.length < 8) {
+      Alert.alert("Field are empty or one of them must be shorter than 8");
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const user = await Signin(form.email, form.password);
+      if (user) {
+        router.replace("/home");
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-primary">

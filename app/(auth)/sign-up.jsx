@@ -1,17 +1,34 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const handleSubmit = () => {
-    createUser();
+
+  // Function to handle the signin
+  const handleSubmit = async () => {
+    if (!form.username || !form.email || form.password.length < 8) {
+      Alert.alert("Field are empty or password must be shorter than 8");
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const user = await createUser(form.username, form.email, form.password);
+      console.log(user);
+      if (user) {
+        router.replace("/home");
+      }
+    } catch (err) {
+      Alert.alert(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
