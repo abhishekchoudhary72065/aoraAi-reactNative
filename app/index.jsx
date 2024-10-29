@@ -9,8 +9,9 @@ import { Redirect, router } from "expo-router";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
 const App = () => {
-  const { isLoading, isLoggedIn } = useGlobalContext();
-  if (!isLoading && isLoggedIn) return <Redirect href="/home" />;
+  const { isLoading, isLoggedIn, user } = useGlobalContext();
+  if (!isLoading && isLoggedIn && user !== null)
+    return <Redirect href="/home" />;
   return (
     <SafeAreaView
       style={{ paddingHorizontal: 30 }}

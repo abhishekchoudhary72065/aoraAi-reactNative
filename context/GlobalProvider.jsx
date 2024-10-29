@@ -1,5 +1,7 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import { getCurrentUser } from "../lib/appwrite";
+import { usePathname } from "expo-router";
+import { Alert } from "react-native";
 
 const globalContext = createContext();
 export const useGlobalContext = () => useContext(globalContext);
@@ -9,6 +11,7 @@ const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const path = usePathname();
   useEffect(() => {
     getCurrentUser()
       .then((user) => {
@@ -20,14 +23,14 @@ const GlobalProvider = ({ children }) => {
           setIsLoggedIn(false);
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => Alert.alert(err.message))
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [path]);
   return (
     <globalContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, isLoading, user }}
+      value={{ isLoggedIn, setIsLoggedIn, isLoading, user, setUser }}
     >
       {children}
     </globalContext.Provider>

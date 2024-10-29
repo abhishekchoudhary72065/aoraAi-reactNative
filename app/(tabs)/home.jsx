@@ -8,11 +8,13 @@ import EmptyState from "../../components/EmptyState";
 import { getAllPost, getLatestPost } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const { data: posts, refetch } = useAppwrite(getAllPost);
   const { data: latestPost } = useAppwrite(getLatestPost);
+  const { user } = useGlobalContext();
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -30,12 +32,12 @@ const Home = () => {
         ListHeaderComponent={() => (
           <View style={{ marginVertical: 24, gap: 24 }} className="pt-5 px-5">
             <View className="justify-between items-start mb-6 flex-row">
-              <View>
+              <View className="gap-y-1">
                 <Text className="font-pmedium text-sm text-gray-100">
                   Welcome Back
                 </Text>
                 <Text className="font-psemibold text-2xl text-white">
-                  Dazzler Abhi
+                  {user?.username}
                 </Text>
               </View>
               <View className="mt-1.5">
