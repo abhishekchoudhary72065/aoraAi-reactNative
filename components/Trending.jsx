@@ -38,6 +38,7 @@ const TrendingItem = ({ activeItem, item }) => {
             style={{
               width: "100%",
               height: "100%",
+              borderRadius: 35,
             }}
             resizeMode={ResizeMode.CONTAIN}
             useNativeControls
