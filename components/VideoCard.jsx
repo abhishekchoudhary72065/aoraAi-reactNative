@@ -20,9 +20,7 @@ const VideoCard = ({
 
   const likePost = async (id) => {
     try {
-      const posts = await handleBookmark(id, user.$id);
-      // console.log(posts.liked);
-      console.log(posts);
+      await handleBookmark(id, user.$id);
     } catch (err) {
       Alert.alert(err.message);
     }
