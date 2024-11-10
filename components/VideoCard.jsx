@@ -20,7 +20,7 @@ const VideoCard = ({
 
   const likePost = async (id) => {
     try {
-      await handleBookmark(id, user.$id);
+      await handleBookmark(id, user?.$id);
     } catch (err) {
       Alert.alert(err.message);
     }
@@ -56,7 +56,7 @@ const VideoCard = ({
           <TouchableOpacity onPress={() => likePost($id)}>
             <Image
               source={icons.bookmark}
-              tintColor={liked.includes(user.$id) ? "#FFA001" : "#CDCDE0"}
+              tintColor={liked.includes(user?.$id) ? "#FFA001" : "#CDCDE0"}
               resizeMode="contain"
               className="w-5 h-5"
             />

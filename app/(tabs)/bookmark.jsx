@@ -13,7 +13,7 @@ const bookmark = () => {
   const [refreshing, setRefreshing] = useState(false);
   const { user } = useGlobalContext();
   const { data: bookmark, refetch } = useAppwrite(() =>
-    getBookmarkPost(user.$id),
+    getBookmarkPost(user?.$id),
   );
 
   const onRefresh = async () => {
