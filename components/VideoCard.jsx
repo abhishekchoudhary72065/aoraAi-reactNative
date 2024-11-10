@@ -1,18 +1,32 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import { icons } from "../constants";
-import { TouchableOpacity } from "react-native";
 import { Video, ResizeMode } from "expo-av";
+import { handleBookmark } from "@/lib/appwrite";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const VideoCard = ({
   item: {
+    $id,
     title,
     video,
     thumbnail,
     creators: { avatar, username },
+    liked,
   },
 }) => {
   const [play, setPlay] = useState(false);
+  const { user } = useGlobalContext();
+
+  const likePost = async (id) => {
+    try {
+      const posts = await handleBookmark(id, user.$id);
+      // console.log(posts.liked);
+      console.log(posts);
+    } catch (err) {
+      Alert.alert(err.message);
+    }
+  };
   return (
     <View className="flex-col items-center px-5 mb-14">
       <View className="flex-row gap-3 items-start">
@@ -40,7 +54,15 @@ const VideoCard = ({
           </View>
         </View>
         <View className="pt-2">
-          <Image source={icons.menu} resizeMode="contain" className="w-5 h-5" />
+          {/* <Image source={icons.menu} resizeMode="contain" className="w-5 h-5" /> */}
+          <TouchableOpacity onPress={() => likePost($id)}>
+            <Image
+              source={icons.bookmark}
+              tintColor={liked.includes(user.$id) ? "#FFA001" : "#CDCDE0"}
+              resizeMode="contain"
+              className="w-5 h-5"
+            />
+          </TouchableOpacity>
         </View>
       </View>
       {play ? (

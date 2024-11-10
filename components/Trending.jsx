@@ -4,6 +4,7 @@ import * as Animatable from "react-native-animatable";
 import { TouchableOpacity } from "react-native";
 import { icons } from "../constants";
 import { ResizeMode, Video } from "expo-av";
+import { isThisTypeNode } from "typescript";
 
 const zoomIn = {
   0: {
